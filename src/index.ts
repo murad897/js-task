@@ -34,6 +34,7 @@ const optionsHard: string[] = [
   "🥭",
   "🍍",
 ];
+
 const optionsMedium: string[] = [
   "🥔",
   "🍒",
@@ -54,15 +55,20 @@ const optionsMedium: string[] = [
   "🥔",
   "🍒",
 ];
-const optionsEazy: string[] = ["🥔", "🍒", "🥑", "🌽", "🥔", "🍒", "🥑", "🌽"];
 
+const optionsEazy: string[] = ["🥔", "🍒", "🥑", "🌽", "🥔", "🍒", "🥑", "🌽"];
 let cardsOnTable: string[];
+
 const innerContainer: HTMLElement = document.querySelector("#inner-container");
 const buttons: HTMLElement[] = Array.from(
   document.querySelectorAll(".inner-popup button")
 );
 let chosenLevel: string;
 let startTimer: number = 0;
+interface Object {
+  text: string;
+  index: number;
+}
 class PlayMemory {
   level: string;
   constructor(level: string) {
@@ -84,7 +90,7 @@ class PlayMemory {
       if (hour < 10) hour = "0" + hour;
       if (minute < 10) minute = "0" + minute;
       if (seconds < 10) seconds = "0" + seconds;
-      return console.log((result = hour + ":" + minute + ":" + seconds));
+      return console.log((result = hour + ":" + minute + ":" + seconds)); //result
     }, 1000);
   }
 
@@ -112,13 +118,26 @@ class PlayMemory {
   }
 
   cardClick() {
-    const cards = document.querySelectorAll(".card");
-    cards.forEach((card) => {
-      card.addEventListener("click", (e) => {
+    const cards: NodeListOf<any> = document.querySelectorAll(".card");
+    let history: Object[] = [];
+
+    cards.forEach((card, index) => {
+      card.addEventListener("click", (e: any) => {
         startTimer += 1;
         if (startTimer === 1) {
           this.startTimer();
         }
+        history.push({
+          text: e.path[1].innerText,
+          index,
+        });
+
+        if (history.length > 1) {
+          history.forEach((item, index) => {});
+        } else {
+          console.log("yes");
+        }
+
         card.classList.add("rototate-card");
       });
     });

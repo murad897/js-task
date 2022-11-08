@@ -106,6 +106,10 @@ p {
   transform: translateX(-100%) rotateY(-180deg);
 }
 
+.rototate-card {
+  pointer-events: none;
+}
+
 .card-face {
   position: absolute;
   width: 100%;
