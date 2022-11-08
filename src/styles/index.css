@@ -97,12 +97,32 @@ p {
   height: 100%;
   cursor: pointer;
   border-radius: 5px;
+  transform-style: preserve-3d;
+  transform-origin: center right;
+  transition: transform 1s;
 }
 
-.card .card-front {
+.card.rototate-card {
+  transform: translateX(-100%) rotateY(-180deg);
+}
+
+.card-face {
+  position: absolute;
   width: 100%;
   height: 100%;
+  line-height: 260px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card .card-front {
   background: rgb(19, 185, 141);
+  border-radius: 5px;
 }
 
 .card img {
@@ -112,8 +132,6 @@ p {
 }
 
 .card-back {
-  display: none;
-  font-size: 25px;
   position: absolute;
   top: 0;
   height: 100%;
@@ -121,6 +139,9 @@ p {
   right: 0;
   margin-left: auto;
   margin-right: auto;
+  background-color: #a8e890;
+  transform: rotateY(180deg);
+  border-radius: 5px;
 }
 
 #inner-container::-webkit-scrollbar {
