@@ -1,7 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
 body {
-  background-color: red;
+  background-color: #bcead5;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-h1 {
-  color: blue;
+#inner-container {
+  display: grid;
+  gap: 10px;
+  justify-self: center;
+  justify-content: center;
+  text-align: center;
+  overflow: auto;
+  height: 600px;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.popup {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+h1,
+p {
+  letter-spacing: 0.1em;
+  padding: 0;
+  margin: 0;
+}
+
+.inner-popup {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inner-popup button {
+  padding: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px;
+  letter-spacing: 0.1em;
+  color: #000000;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.easy-level {
+  background: #82cd47 !important;
+}
+
+.medium-level {
+  background: #f6f6c9 !important;
+}
+
+.hard-level {
+  background: #ff6464 !important;
+}
+
+.prisoneazy {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+}
+
+.prisonmedium {
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: auto;
+}
+
+.prisonhard {
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+}
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.card .card-front {
+  width: 100%;
+  height: 100%;
+  background: rgb(19, 185, 141);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.card-back {
+  display: none;
+  font-size: 25px;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#inner-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#inner-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
