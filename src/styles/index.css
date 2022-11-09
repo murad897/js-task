@@ -22,6 +22,7 @@ body {
   overflow: auto;
   height: 600px;
   align-items: center;
+  margin-bottom: 50px;
 }
 
 .container {
