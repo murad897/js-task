@@ -1,10 +1,17 @@
 import "./styles/index.css";
-
+interface Object {
+  text: string;
+  index: number;
+}
 const optionsHard: string[] = ["🥔","🍒","🥑","🌽","🥕","🍇","🍉","🍌","🥭","🍍","🥔","🍒","🥑","🌽","🥕","🍇","🍉","🍌","🥭","🍍","🥔","🍒","🥑","🌽","🥕","🍇","🍉","🍌","🥭","🍍","🥭","🍍","🍌","🥭","🍍","🥭","🥔","🍒","🥑","🌽","🥕","🍇","🍉","🍌","🥭","🍍","🥔","🍒","🥑","🌽","🥕","🍇","🍉","🍌","🥭","🍍","🥔","🍒","🥑","🌽","🥕","🍇","🍉","🍌","🥭","🍍","🥭","🍍","🍌","🥭","🍍","🥭"];
 const optionsMedium: string[] = ["🥔","🍒","🥑","🌽","🥕","🍇","🍉","🍌","🥔","🍒","🥑","🌽","🥕","🍇","🍉","🍌","🥔","🍒","🥑","🌽","🥕","🍇","🍉","🍌","🥔","🍒","🥑","🌽","🥕","🍇","🍉","🍌"];
 const optionsEazy: string[] = ["🥔", "🍒", "🥑", "🌽", "🥔", "🍒", "🥑", "🌽"];
 let cardsOnTable: string[];
-
+const selector: HTMLButtonElement = document.querySelector(".selector-value");
+const selectorMenu: HTMLDListElement = document.querySelector("#selector");
+const selectorMenuItems: HTMLElement[] = Array.from(
+  document.querySelectorAll(".selector-item")
+);
 const innerContainer: HTMLElement = document.querySelector("#inner-container");
 const finishedTextPopup: HTMLElement = document.querySelector(".timer-popup");
 const buttons: HTMLElement[] = Array.from(
@@ -14,10 +21,7 @@ let chosenLevel: string;
 let startTimer: number = 0;
 let timer: any;
 let gamefinishedText: string;
-interface Object {
-  text: string;
-  index: number;
-}
+
 class PlayMemory {
   level: string;
   constructor(level: string) {
@@ -38,6 +42,7 @@ class PlayMemory {
       if (hour < 10) hour = "0" + hour;
       if (minute < 10) minute = "0" + minute;
       if (seconds < 10) seconds = "0" + seconds;
+      console.log(seconds);
       gamefinishedText = `<div>
       <p>Congrats you finished this level in</p>
       <p>${hour}: ${minute}: ${seconds}</p>
@@ -46,6 +51,24 @@ class PlayMemory {
   }
 
   getLevel() {
+    this.level === "2"
+      ? (cardsOnTable = optionsEazy
+          .slice(0, 2)
+          .concat(optionsEazy.slice(0, 2))
+          .sort(() => Math.random() - 0.5))
+      : null;
+    this.level === "6"
+      ? (cardsOnTable = optionsMedium
+          .slice(0, 18)
+          .concat(optionsMedium.slice(0, 18))
+          .sort(() => Math.random() - 0.5))
+      : null;
+    this.level === "10"
+      ? (cardsOnTable = optionsHard
+          .slice(0, 50)
+          .concat(optionsHard.slice(0, 50))
+          .sort(() => Math.random() - 0.5))
+      : null;
     this.level === "eazy"
       ? (cardsOnTable = optionsEazy
           .concat(optionsEazy)
@@ -71,10 +94,10 @@ class PlayMemory {
   cardClick() {
     const cards: NodeListOf<any> = document.querySelectorAll(".card");
     let history: Object[] = [];
-
     cards.forEach((card, index) => {
       card.addEventListener("click", (e: any) => {
         card.classList.add("rototate-card");
+        console.log(card, "click");
         startTimer += 1;
         if (startTimer === 1) {
           this.startTimer();
@@ -85,14 +108,12 @@ class PlayMemory {
         });
         if (history.length === cardsOnTable.length) {
           clearInterval(timer);
+          startTimer = 0;
           finishedTextPopup.classList.add("active");
           finishedTextPopup.innerHTML = gamefinishedText;
           history = [];
           setTimeout(() => {
             finishedTextPopup.classList.remove("active");
-            cardsOnTable = optionsEazy
-              .concat(optionsEazy)
-              .sort(() => Math.random() - 0.5);
             cards.forEach((item) => {
               item.classList.remove("rototate-card");
             });
@@ -112,6 +133,7 @@ class PlayMemory {
               removeActive.forEach((item) => {
                 setTimeout(() => {
                   cards[item.index].classList.remove("rototate-card");
+                  
                 }, 700);
               });
               history.splice(history.length - 2, 2);
@@ -137,7 +159,22 @@ class PlayMemory {
 
 buttons.map((button) => {
   button.addEventListener("click", () => {
-    chosenLevel = button.dataset.level;
-    let newGame = new PlayMemory(chosenLevel);
+    if (button.className !== "selector-value") {
+      chosenLevel = button.dataset.level;
+      new PlayMemory(chosenLevel);
+    }
+  });
+});
+
+selector.addEventListener("click", () => {
+  selectorMenu.classList.toggle("active-menu");
+});
+
+selectorMenuItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    selectorMenu.classList.remove("active-menu");
+    selector.innerHTML = `<p>${item.textContent}&#x21d3;</p>`;
+    const customLevel: string = item.dataset.level;
+    new PlayMemory(customLevel);
   });
 });

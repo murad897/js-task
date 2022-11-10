@@ -76,6 +76,18 @@ p {
   background: #ff6464 !important;
 }
 
+.prison2 {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+}
+.prison6 {
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto;
+}
+.prison10 {
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: auto;
+}
 .prisoneazy {
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
@@ -161,15 +173,16 @@ p {
   display: none;
   width: 400px;
   height: auto;
+  border-radius: 30px;
   font-size: 25px;
   text-align: center;
   position: fixed;
-  background: #432c7a;
-  padding: 20px;
+  background: #0e5e6f;
+  padding: 30px;
   color: white;
   font-weight: bold;
-  top: calc(50%);
-  left: calc(50% - 200px);
+  top: calc(50% - 80px);
+  left: calc(50% - 230px);
 }
 
 .timer-popup button {
@@ -182,4 +195,45 @@ p {
 
 .active {
   display: block;
+}
+
+#selector {
+  display: none;
+  width: 130px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 12px;
+  background-color: #ffefd6;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: bold;
+  z-index: 10;
+  overflow: hidden;
+}
+
+#selector div {
+  padding: 5px;
+}
+
+.selector-value {
+  background-color: #ffefd6 !important;
+  padding: 10px 20px !important;
+  width: 130px;
+  font-size: 18px;
+  border-radius: 5px;
+  margin-top: 12px;
+}
+
+#selector:focus,
+:hover {
+  outline: none;
+}
+
+.active-menu {
+  display: block !important;
+  text-align: left;
 }
