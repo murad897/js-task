@@ -8,7 +8,7 @@ const optionsHard: string[] = ["😀", "😀","😇", "😇", "🙂", "🙂","�
 const optionsHard10x10: string[] = ["😀", "😀","😇", "😇", "🙂", "🙂","😝", "😝","🙃", "🙃", "😁","😁", "🤞","🤞", "👎 ", "👎 ", "🤜", "🤜" , "👏", "👏", "👧","👧", "😑", "😑", "😞", "😞", "🥲", "🥲", "😂", "😂", "😊", "😊", "😵", "😵", "💩", "💩", "😾", "😾" , "😹", "😹", "😼", "😼", "💀", "💀", "🤧", "🤧", "😷", "😷", "🤒", "🤒", "🤕", "🤕", "🥱", "🥱", "😪", "😪", "😡", "😡", "🤬", "🤬", "🤯", "🤯", "🤖", "🤖", "😈", "😈", "👹", "👹", "🥶", "🥶", "😎", "😎", "🎃", "🎃", "🐶", "🐶", "🐱", "🐱","🐭","🐭", "🐹", "🐹", "🐰", "🐰", "🦊", "🦊", "🐻", "🐻", "🐼", "🐼", "🐻‍❄️", "🐻‍❄️", "🐨", "🐨", "🐯", "🐯", "🐮", "🐮","🐷", "🐷"]
 const optionsMedium: string[] = ["😀", "😀","😇", "😇", "🙂", "🙂","😝", "😝","🙃", "🙃", "😁","😁", "🤞","🤞", "👎 ", "👎 ", "🤜", "🤜" , "👏", "👏", "👧","👧", "😑", "😑", "😞", "😞", "🥲", "🥲", "😂", "😂", "😊", "😊", "😵", "😵", "💩", "💩", "😾", "😾" , "😹", "😹", "😼", "😼", "💀", "💀", "🤧", "🤧", "😷", "😷", "🤒", "🤒", "🤕", "🤕", "🥱", "🥱", "😪", "😪", "😡","😡", "🤬 ", "🤬", "🤯", "🤯", "🤖", "🤖"];
 const optionsMedium6x6: string[] = ["😀", "😀","😇", "😇", "🙂", "🙂","😝", "😝","🙃", "🙃", "😁","😁", "🤞","🤞", "👎 ", "👎 ", "🤜", "🤜" , "👏", "👏", "👧","👧", "😑", "😑", "😞", "😞", "🥲", "🥲", "😂", "😂", "😊", "😊", "😵", "😵", "💩", "💩"];
-const optionsEazy: string[] = [ "😇", "😇", "😀", "😀",  "🙂", "🙂", "😝", "😝", "🙃", "🙃", "😁", "😁", "👎 ", "👎 ", "🤜", "🤜"];
+const optionsEazy: string[] = [ "😇", "😇", "😀", "😀", "🙂", "🙂", "😝", "😝", "🙃", "🙃", "😁", "😁", "👎 ", "👎 ", "🤜", "🤜"];
 const optionsEazy2x2: string[] = [ "😇", "😇", "😀", "😀"];
 
 const selector: HTMLButtonElement = document.querySelector(".selector-value");
@@ -51,7 +51,6 @@ class PlayMemory {
       if (hour < 10) hour = "0" + hour;
       if (minute < 10) minute = "0" + minute;
       if (seconds < 10) seconds = "0" + seconds;
-      console.log('seconds', seconds)
       gamefinishedText = `<div>
       <p>Congrats you finished this level in</p>
       <p>${hour}: ${minute}: ${seconds}</p>
@@ -92,15 +91,32 @@ class PlayMemory {
     this.addCard(cardsOnTable);
   }
 
+  addCard(cardsOnTable: string[]) {
+    innerContainer.innerHTML = "";
+    cardsOnTable.map((item) => {
+      let card = document.createElement("div"); 
+      card.className = 'card'
+      let frontSide = document.createElement("div"); 
+      frontSide.className = "card-face card-front";
+      let backSide = document.createElement("div"); 
+      backSide.innerText = `${item}`
+      backSide.className = "card-face card-back";
+      card.appendChild(frontSide)
+      card.appendChild(backSide)
+      innerContainer.appendChild(card)
+    });
+    this.cardClick()
+  }
+
   cardClick() {
     const cards: NodeListOf<any> = document.querySelectorAll(".card");
     let history: Object[] = [];
     cards.forEach((card, index) => {
       card.addEventListener("click", (e: any) => {
+        console.log(card, 'card')
         card.classList.add("rototate-card");
         startTimer += 1;
         if (startTimer === 1) {
-          console.log('timer started')
           this.startTimer();
         }
         history.push({
@@ -118,6 +134,7 @@ class PlayMemory {
             cards.forEach((item) => {
               item.classList.remove("rototate-card");
             });
+            this.getLevel()
           }, 3000);
         }
         if (history.length > 1) {
@@ -142,18 +159,7 @@ class PlayMemory {
       });
     });
   }
-
-  addCard(cardsOnTable: string[]) {
-    innerContainer.innerHTML = "";
-    cardsOnTable.map((item) => {
-      let card = `
-        <div class="card">
-        <div class="card-face card-front"></div>
-        <div class="card-face card-back">${item}</div>
-      </div>`;
-      innerContainer.innerHTML += card;
-    });
-  }
+  
 }
 
 buttons.map((button) => {
