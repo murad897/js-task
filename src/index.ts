@@ -3,20 +3,26 @@ interface Object {
   text: string;
   index: number;
 }
+
 const optionsHard: string[] = ["😀", "😀","😇", "😇", "🙂", "🙂","😝", "😝","🙃", "🙃", "😁","😁", "🤞","🤞", "👎 ", "👎 ", "🤜", "🤜" , "👏", "👏", "👧","👧", "😑", "😑", "😞", "😞", "🥲", "🥲", "😂", "😂", "😊", "😊", "😵", "😵", "💩", "💩", "😾", "😾" , "😹", "😹", "😼", "😼", "💀", "💀", "🤧", "🤧", "😷", "😷", "🤒", "🤒", "🤕", "🤕", "🥱", "🥱", "😪", "😪", "😡", "😡", "🤬", "🤬", "🤯", "🤯", "🤖", "🤖", "😈", "😈", "👹", "👹", "🥶", "🥶", "😎", "😎", "🎃", "🎃", "🐶", "🐶", "🐱", "🐱","🐭","🐭", "🐹", "🐹", "🐰", "🐰", "🦊", "🦊", "🐻", "🐻", "🐼", "🐼", "🐻‍❄️", "🐻‍❄️", "🐨", "🐨", "🐯", "🐯", "🐮", "🐮","🐷", "🐷", "🦉", "🦉", "🦇", "🦇","🐺","🐺","🌞","🌞", "🌝","🌝","🌛","🌛","🌜","🌜", "🌚", "🌚", "🌕", "🌕", "🌒", "🌒", "⚡️","⚡️", "🌤","🌤", "🌎", "🌎", "☔️","☔️","🌨","🌨","🌈","🌈","🍟", "🍟", "🍜", "🍜", "🍥", "🍥","🍘", "🍘","🍬", "🍬","🥇", "🥇"];
+const optionsHard10x10: string[] = ["😀", "😀","😇", "😇", "🙂", "🙂","😝", "😝","🙃", "🙃", "😁","😁", "🤞","🤞", "👎 ", "👎 ", "🤜", "🤜" , "👏", "👏", "👧","👧", "😑", "😑", "😞", "😞", "🥲", "🥲", "😂", "😂", "😊", "😊", "😵", "😵", "💩", "💩", "😾", "😾" , "😹", "😹", "😼", "😼", "💀", "💀", "🤧", "🤧", "😷", "😷", "🤒", "🤒", "🤕", "🤕", "🥱", "🥱", "😪", "😪", "😡", "😡", "🤬", "🤬", "🤯", "🤯", "🤖", "🤖", "😈", "😈", "👹", "👹", "🥶", "🥶", "😎", "😎", "🎃", "🎃", "🐶", "🐶", "🐱", "🐱","🐭","🐭", "🐹", "🐹", "🐰", "🐰", "🦊", "🦊", "🐻", "🐻", "🐼", "🐼", "🐻‍❄️", "🐻‍❄️", "🐨", "🐨", "🐯", "🐯", "🐮", "🐮","🐷", "🐷"]
 const optionsMedium: string[] = ["😀", "😀","😇", "😇", "🙂", "🙂","😝", "😝","🙃", "🙃", "😁","😁", "🤞","🤞", "👎 ", "👎 ", "🤜", "🤜" , "👏", "👏", "👧","👧", "😑", "😑", "😞", "😞", "🥲", "🥲", "😂", "😂", "😊", "😊", "😵", "😵", "💩", "💩", "😾", "😾" , "😹", "😹", "😼", "😼", "💀", "💀", "🤧", "🤧", "😷", "😷", "🤒", "🤒", "🤕", "🤕", "🥱", "🥱", "😪", "😪", "😡","😡", "🤬 ", "🤬", "🤯", "🤯", "🤖", "🤖"];
+const optionsMedium6x6: string[] = ["😀", "😀","😇", "😇", "🙂", "🙂","😝", "😝","🙃", "🙃", "😁","😁", "🤞","🤞", "👎 ", "👎 ", "🤜", "🤜" , "👏", "👏", "👧","👧", "😑", "😑", "😞", "😞", "🥲", "🥲", "😂", "😂", "😊", "😊", "😵", "😵", "💩", "💩"];
 const optionsEazy: string[] = [ "😇", "😇", "😀", "😀",  "🙂", "🙂", "😝", "😝", "🙃", "🙃", "😁", "😁", "👎 ", "👎 ", "🤜", "🤜"];
-let cardsOnTable: string[];
+const optionsEazy2x2: string[] = [ "😇", "😇", "😀", "😀"];
+
 const selector: HTMLButtonElement = document.querySelector(".selector-value");
 const selectorMenu: HTMLDListElement = document.querySelector("#selector");
+const innerContainer: HTMLElement = document.querySelector("#inner-container");
+const finishedTextPopup: HTMLElement = document.querySelector(".timer-popup");
 const selectorMenuItems: HTMLElement[] = Array.from(
   document.querySelectorAll(".selector-item")
 );
-const innerContainer: HTMLElement = document.querySelector("#inner-container");
-const finishedTextPopup: HTMLElement = document.querySelector(".timer-popup");
 const buttons: HTMLElement[] = Array.from(
   document.querySelectorAll(".inner-popup button")
 );
+
+let cardsOnTable: string[];
 let chosenLevel: string;
 let startTimer: number = 0;
 let timer: any;
@@ -26,6 +32,9 @@ class PlayMemory {
   level: string;
   constructor(level: string) {
     this.level = level;
+  }
+
+  play() {
     this.getLevel();
     this.cardClick();
   }
@@ -54,21 +63,15 @@ class PlayMemory {
     startTimer = 0;
     clearInterval(timer);
     this.level === "2"
-      ? (cardsOnTable = optionsEazy
-          .slice(0, 2)
-          .concat(optionsEazy.slice(0, 2))
+      ? (cardsOnTable = optionsEazy2x2
           .sort(() => Math.random() - 0.5))
       : null;
     this.level === "6"
-      ? (cardsOnTable = optionsMedium
-          .slice(0, 18)
-          .concat(optionsMedium.slice(0, 18))
+      ? (cardsOnTable = optionsMedium6x6
           .sort(() => Math.random() - 0.5))
       : null;
     this.level === "10"
-      ? (cardsOnTable = optionsHard
-          .slice(0, 50)
-          .concat(optionsMedium.slice(0, 50))
+      ? (cardsOnTable = optionsHard10x10
           .sort(() => Math.random() - 0.5))
       : null;
     this.level === "eazy"
@@ -79,7 +82,6 @@ class PlayMemory {
       ? (cardsOnTable = optionsMedium
           .sort(() => Math.random() - 0.5))
       : null;
-
     this.level === "hard"
       ? (cardsOnTable = optionsHard
           .sort(() => Math.random() - 0.5))
@@ -125,7 +127,7 @@ class PlayMemory {
               item.text === history[index - 1].text &&
               index! % 2
             ) {
-              console.log("yes");
+              return null
             } else if (index !== 0 && index! % 2) {
               let removeActive = history.slice(-2);
               removeActive.forEach((item) => {
@@ -158,7 +160,8 @@ buttons.map((button) => {
   button.addEventListener("click", () => {
     if (button.className !== "selector-value") {
       chosenLevel = button.dataset.level;
-      new PlayMemory(chosenLevel);
+      let game =  new PlayMemory(chosenLevel);
+      game.play()
     }
   });
 });
@@ -172,6 +175,7 @@ selectorMenuItems.forEach((item) => {
     selectorMenu.classList.remove("active-menu");
     selector.innerHTML = `<p>${item.textContent}&#x21d3;</p>`;
     const customLevel: string = item.dataset.level;
-    new PlayMemory(customLevel);
+    let game =  new PlayMemory(customLevel);
+    game.play()
   });
 });
