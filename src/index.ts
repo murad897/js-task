@@ -1,8 +1,10 @@
 import "./styles/index.css";
+
 interface Object {
   text: string;
   index: number;
 }
+
 
 const optionsHard: string[] = ["😀", "😀","😇", "😇", "🙂", "🙂","😝", "😝","🙃", "🙃", "😁","😁", "🤞","🤞", "👎 ", "👎 ", "🤜", "🤜" , "👏", "👏", "👧","👧", "😑", "😑", "😞", "😞", "🥲", "🥲", "😂", "😂", "😊", "😊", "😵", "😵", "💩", "💩", "😾", "😾" , "😹", "😹", "😼", "😼", "💀", "💀", "🤧", "🤧", "😷", "😷", "🤒", "🤒", "🤕", "🤕", "🥱", "🥱", "😪", "😪", "😡", "😡", "🤬", "🤬", "🤯", "🤯", "🤖", "🤖", "😈", "😈", "👹", "👹", "🥶", "🥶", "😎", "😎", "🎃", "🎃", "🐶", "🐶", "🐱", "🐱","🐭","🐭", "🐹", "🐹", "🐰", "🐰", "🦊", "🦊", "🐻", "🐻", "🐼", "🐼", "🐻‍❄️", "🐻‍❄️", "🐨", "🐨", "🐯", "🐯", "🐮", "🐮","🐷", "🐷", "🦉", "🦉", "🦇", "🦇","🐺","🐺","🌞","🌞", "🌝","🌝","🌛","🌛","🌜","🌜", "🌚", "🌚", "🌕", "🌕", "🌒", "🌒", "⚡️","⚡️", "🌤","🌤", "🌎", "🌎", "☔️","☔️","🌨","🌨","🌈","🌈","🍟", "🍟", "🍜", "🍜", "🍥", "🍥","🍘", "🍘","🍬", "🍬","🥇", "🥇"];
 const optionsHard10x10: string[] = ["😀", "😀","😇", "😇", "🙂", "🙂","😝", "😝","🙃", "🙃", "😁","😁", "🤞","🤞", "👎 ", "👎 ", "🤜", "🤜" , "👏", "👏", "👧","👧", "😑", "😑", "😞", "😞", "🥲", "🥲", "😂", "😂", "😊", "😊", "😵", "😵", "💩", "💩", "😾", "😾" , "😹", "😹", "😼", "😼", "💀", "💀", "🤧", "🤧", "😷", "😷", "🤒", "🤒", "🤕", "🤕", "🥱", "🥱", "😪", "😪", "😡", "😡", "🤬", "🤬", "🤯", "🤯", "🤖", "🤖", "😈", "😈", "👹", "👹", "🥶", "🥶", "😎", "😎", "🎃", "🎃", "🐶", "🐶", "🐱", "🐱","🐭","🐭", "🐹", "🐹", "🐰", "🐰", "🦊", "🦊", "🐻", "🐻", "🐼", "🐼", "🐻‍❄️", "🐻‍❄️", "🐨", "🐨", "🐯", "🐯", "🐮", "🐮","🐷", "🐷"]
@@ -29,14 +31,45 @@ let timer: any;
 let gamefinishedText: string;
 
 class PlayMemory {
+  selectMenuItems: HTMLElement[];
+  buttons: HTMLElement[];
+  selector: HTMLButtonElement;
   level: string;
-  constructor(level: string) {
-    this.level = level;
+  constructor(
+    selectMenuItems: HTMLElement[],
+    buttons: HTMLElement[],
+    selector: HTMLButtonElement
+  ) {
+    this.selectMenuItems = selectMenuItems;
+    this.buttons = buttons;
+    this.selector = selector;
+    this.level = "";
   }
 
   play() {
-    this.getLevel();
-    this.cardClick();
+    this.buttons.map((button) => {
+      button.addEventListener("click", () => {
+        if (button.className !== "selector-value") {
+          chosenLevel = button.dataset.level;
+          this.level = chosenLevel;
+          this.getLevel();
+        }
+      });
+    });
+
+    this.selector.addEventListener("click", () => {
+      selectorMenu.classList.toggle("active-menu");
+    });
+
+    selectorMenuItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        selectorMenu.classList.remove("active-menu");
+        selector.innerHTML = `<p>${item.textContent}&#x21d3;</p>`;
+        const customLevel: string = item.dataset.level;
+        this.level = customLevel;
+        this.getLevel();
+      });
+    });
   }
 
   startTimer() {
@@ -62,28 +95,22 @@ class PlayMemory {
     startTimer = 0;
     clearInterval(timer);
     this.level === "2"
-      ? (cardsOnTable = optionsEazy2x2
-          .sort(() => Math.random() - 0.5))
+      ? (cardsOnTable = optionsEazy2x2.sort(() => Math.random() - 0.5))
       : null;
     this.level === "6"
-      ? (cardsOnTable = optionsMedium6x6
-          .sort(() => Math.random() - 0.5))
+      ? (cardsOnTable = optionsMedium6x6.sort(() => Math.random() - 0.5))
       : null;
     this.level === "10"
-      ? (cardsOnTable = optionsHard10x10
-          .sort(() => Math.random() - 0.5))
+      ? (cardsOnTable = optionsHard10x10.sort(() => Math.random() - 0.5))
       : null;
     this.level === "eazy"
-      ? (cardsOnTable = optionsEazy
-          .sort(() => Math.random() - 0.5))
+      ? (cardsOnTable = optionsEazy.sort(() => Math.random() - 0.5))
       : null;
     this.level === "medium"
-      ? (cardsOnTable = optionsMedium
-          .sort(() => Math.random() - 0.5))
+      ? (cardsOnTable = optionsMedium.sort(() => Math.random() - 0.5))
       : null;
     this.level === "hard"
-      ? (cardsOnTable = optionsHard
-          .sort(() => Math.random() - 0.5))
+      ? (cardsOnTable = optionsHard.sort(() => Math.random() - 0.5))
       : null;
 
     innerContainer.className = "";
@@ -93,19 +120,20 @@ class PlayMemory {
 
   addCard(cardsOnTable: string[]) {
     innerContainer.innerHTML = "";
+    console.log('yes')
     cardsOnTable.map((item) => {
-      let card = document.createElement("div"); 
-      card.className = 'card'
-      let frontSide = document.createElement("div"); 
+      let card = document.createElement("div");
+      card.className = "card";
+      let frontSide = document.createElement("div");
       frontSide.className = "card-face card-front";
-      let backSide = document.createElement("div"); 
-      backSide.innerText = `${item}`
+      let backSide = document.createElement("div");
+      backSide.innerText = `${item}`;
       backSide.className = "card-face card-back";
-      card.appendChild(frontSide)
-      card.appendChild(backSide)
-      innerContainer.appendChild(card)
+      card.appendChild(frontSide);
+      card.appendChild(backSide);
+      innerContainer.appendChild(card);
     });
-    this.cardClick()
+    this.cardClick();
   }
 
   cardClick() {
@@ -113,7 +141,7 @@ class PlayMemory {
     let history: Object[] = [];
     cards.forEach((card, index) => {
       card.addEventListener("click", (e: any) => {
-        console.log(card, 'card')
+        console.log(card, "card");
         card.classList.add("rototate-card");
         startTimer += 1;
         if (startTimer === 1) {
@@ -134,7 +162,7 @@ class PlayMemory {
             cards.forEach((item) => {
               item.classList.remove("rototate-card");
             });
-            this.getLevel()
+            this.getLevel();
           }, 3000);
         }
         if (history.length > 1) {
@@ -144,7 +172,7 @@ class PlayMemory {
               item.text === history[index - 1].text &&
               index! % 2
             ) {
-              return null
+              return null;
             } else if (index !== 0 && index! % 2) {
               let removeActive = history.slice(-2);
               removeActive.forEach((item) => {
@@ -159,29 +187,7 @@ class PlayMemory {
       });
     });
   }
-  
 }
 
-buttons.map((button) => {
-  button.addEventListener("click", () => {
-    if (button.className !== "selector-value") {
-      chosenLevel = button.dataset.level;
-      let game =  new PlayMemory(chosenLevel);
-      game.play()
-    }
-  });
-});
-
-selector.addEventListener("click", () => {
-  selectorMenu.classList.toggle("active-menu");
-});
-
-selectorMenuItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    selectorMenu.classList.remove("active-menu");
-    selector.innerHTML = `<p>${item.textContent}&#x21d3;</p>`;
-    const customLevel: string = item.dataset.level;
-    let game =  new PlayMemory(customLevel);
-    game.play()
-  });
-});
+let game = new PlayMemory(selectorMenuItems, buttons, selector);
+game.play();
