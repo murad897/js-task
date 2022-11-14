@@ -4,6 +4,7 @@ body {
   background-color: #bcead5;
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   font-family: "Poppins", sans-serif;
   flex-direction: column;
@@ -102,6 +103,11 @@ p {
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto;
 }
+
+.prisonhard div {
+  font-size: calc(300% - 30px);
+}
+
 .card {
   position: relative;
   width: 100%;
@@ -137,12 +143,6 @@ p {
 }
 .card .card-front {
   background: rgb(19, 185, 141);
-  border-radius: 5px;
-}
-
-.card img {
-  width: 100%;
-  height: 100%;
   border-radius: 5px;
 }
 
@@ -236,4 +236,8 @@ p {
 .active-menu {
   display: block !important;
   text-align: left;
+}
+
+.hide-popup {
+  display: none;
 }
