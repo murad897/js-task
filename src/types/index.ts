@@ -3,7 +3,7 @@ export interface Object {
   index: number;
 }
 
-export interface PlayMemoryimplements {
+export interface IPlayMemory {
   play(): void;
   startTimer(): void;
   getLevel(): void;

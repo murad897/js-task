@@ -1,8 +1,8 @@
 import "./styles/index.css";
-import { Object, PlayMemoryimplements } from "./types";
-import { emojis } from "./constans";
+import { Object, IPlayMemory } from "./types";
+import { emojis } from "./constants";
 
-class PlayMemory implements PlayMemoryimplements {
+class PlayMemory implements IPlayMemory {
   selectMenuItems: HTMLElement[];
   buttons: HTMLElement[];
   selector: HTMLButtonElement;
@@ -11,13 +11,15 @@ class PlayMemory implements PlayMemoryimplements {
   selectorMenu: HTMLDListElement;
   innerContainer: HTMLElement;
   chosenLevelPopup: HTMLElement;
-  startTimerFromZero:number;
+  startTimerFromZero: number;
   cardsOnTable: string[];
   interval: any;
   finishedTextPopup: HTMLElement;
   gamefinishedText: string;
-  constructor() {
-    this.selectMenuItems = Array.from(document.querySelectorAll(".selector-item"));
+  constructor() {    
+    this.selectMenuItems = Array.from(
+      document.querySelectorAll(".selector-item")
+    );
     this.buttons = Array.from(document.querySelectorAll(".inner-popup button"));
     this.selectorMenu = document.querySelector("#selector");
     this.selector = document.querySelector(".selector-value");
@@ -65,7 +67,8 @@ class PlayMemory implements PlayMemoryimplements {
       let minute: string | number = Math.floor(
         (this.totalSeconds - hour * 3600) / 60
       );
-      let seconds: string | number = this.totalSeconds - (hour * 3600 + minute * 60);
+      let seconds: string | number =
+        this.totalSeconds - (hour * 3600 + minute * 60);
       if (hour < 10) hour = "0" + hour;
       if (minute < 10) minute = "0" + minute;
       if (seconds < 10) seconds = "0" + seconds;
@@ -80,19 +83,27 @@ class PlayMemory implements PlayMemoryimplements {
     this.startTimerFromZero = 0;
     clearInterval(this.interval);
     this.level === "2"
-      ? (this.cardsOnTable = emojis.slice(0,4).sort(() => Math.random() - 0.5))
+      ? (this.cardsOnTable = emojis.slice(0, 4).sort(() => Math.random() - 0.5))
       : null;
     this.level === "6"
-      ? (this.cardsOnTable = emojis.slice(0,36).sort(() => Math.random() - 0.5))
+      ? (this.cardsOnTable = emojis
+          .slice(0, 36)
+          .sort(() => Math.random() - 0.5))
       : null;
-      this.level === "10"
-      ? (this.cardsOnTable = emojis.slice(0,100).sort(() => Math.random() - 0.5))
+    this.level === "10"
+      ? (this.cardsOnTable = emojis
+          .slice(0, 100)
+          .sort(() => Math.random() - 0.5))
       : null;
-      this.level === "eazy"
-      ? (this.cardsOnTable = emojis.slice(0,16).sort(() => Math.random() - 0.5))
+    this.level === "eazy"
+      ? (this.cardsOnTable = emojis
+          .slice(0, 16)
+          .sort(() => Math.random() - 0.5))
       : null;
-      this.level === "medium"
-      ? (this.cardsOnTable = emojis.slice(0,64).sort(() => Math.random() - 0.5))
+    this.level === "medium"
+      ? (this.cardsOnTable = emojis
+          .slice(0, 64)
+          .sort(() => Math.random() - 0.5))
       : null;
     this.level === "hard"
       ? (this.cardsOnTable = emojis.sort(() => Math.random() - 0.5))
@@ -121,14 +132,15 @@ class PlayMemory implements PlayMemoryimplements {
   }
 
   cardClick() {
-    const cards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".card");
+    const cards: NodeListOf<HTMLDivElement> =
+      document.querySelectorAll(".card");
     let history: Object[] = [];
     cards.forEach((card, index) => {
       card.addEventListener("click", (e: any) => {
         card.classList.add("rototate-card");
         this.startTimerFromZero += 1;
         if (this.startTimerFromZero === 1) {
-          this.chosenLevelPopup.classList.add('hide-popup')
+          this.chosenLevelPopup.classList.add("hide-popup");
           this.startTimer();
         }
         history.push({
@@ -145,7 +157,7 @@ class PlayMemory implements PlayMemoryimplements {
             this.finishedTextPopup.classList.remove("active");
             cards.forEach((item) => {
               item.classList.remove("rototate-card");
-              this.chosenLevelPopup.classList.remove('hide-popup')
+              this.chosenLevelPopup.classList.remove("hide-popup");
             });
             this.getLevel();
           }, 3000);
